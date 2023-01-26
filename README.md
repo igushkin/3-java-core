@@ -1,74 +1,74 @@
 # 3-java-core
 
-This is part of the course Java Developer from Yandex.
+This is part of the Java Developer course from Yandex.
 Module - standard Java library and its features.
 
 The repository contains my solution that has been verified from the reviewer to the task described below.
 
-Техническое задание
+Technical specification
 ===================
 
-Как человек обычно делает покупки? Если ему нужен не один продукт, а несколько, то очень вероятно, что сначала он составит список, чтобы ничего не забыть. Сделать это можно где угодно: на листе бумаги, в приложении для заметок или, например, в сообщении самому себе в мессенджере.
+How does a person usually shop? If he needs not one product, but several, then it is very likely that he will first make a list so as not to forget anything. You can do this anywhere: on a piece of paper, in a note-taking application, or, for example, in a message to yourself in a messenger.
 
-А теперь представьте, что это список не продуктов, а полноценных дел. И не каких-нибудь простых вроде **«**помыть посуду**»** или **«**позвонить бабушке**»,** а сложных — например, **«**организовать большой семейный праздник**»** или **«**купить квартиру**»**. Каждая из таких задач может разбиваться на несколько этапов со своими нюансами и сроками. А если над их выполнением будет работать не один человек, а целая команда, то организация процесса станет ещё сложнее.
+And now imagine that this is not a list of products, but of full-fledged cases. And not some simple ones like **"** wash the dishes**"** or **"** call grandma**",** but complex ones — for example, **"** organize a big family holiday**"** or **"** buy an apartment**"**. Each of these tasks can be divided into several stages with its own nuances and deadlines. And if not one person, but a whole team will work on their implementation, then the organization of the process will become even more difficult.
 
-Трекер задач
+Task Tracker
 ------------
 
-Как системы контроля версий помогают команде работать с общим кодом, так и трекеры задач позволяют эффективно организовать совместную работу над задачами. Вам предстоит написать бэкенд для такого трекера. В итоге должна получиться программа, отвечающая за формирование модели данных для этой страницы:
+Both version control systems help the team work with common code, and task trackers allow you to effectively organize joint work on tasks. You have to write a backend for such a tracker. As a result, you should get a program responsible for forming a data model for this page:
 
 ![image](https://pictures.s3.yandex.net:443/resources/Untitled_25_1639469823.png)
 
-💡 Пользователь не будет видеть консоль вашего приложения. Поэтому нужно сделать так, чтобы методы не просто печатали что-то в консоль, но и возвращали объекты нужных типов.  
-Вы можете добавить консольный вывод для самопроверки в класcе `Main`, но на работу методов он влиять не должен.
+The user will not see the console of your application. Therefore, you need to make sure that the methods do not just print something to the console, but also return objects of the desired types.
+You can add console output for self-checking in the `Main` class, but it should not affect the operation of methods.
 
-Типы задач
+Types of tasks
 ----------
 
-Простейшим кирпичиком такой системы является **задача** (англ. _task_). У задачи есть следующие свойства:
+The simplest building block of such a system is the **task** (Eng. _task_). The task has the following properties:
 
-1.  **Название**, кратко описывающее суть задачи (например, **«**Переезд**»**).
-2.  **Описание**, в котором раскрываются детали.
-3.  **Уникальный идентификационный номер задачи**, по которому её можно будет найти.
-4.  **Статус**, отображающий её прогресс. Мы будем выделять следующие этапы жизни задачи:
-    
-    1.  `NEW` — задача только создана, но к её выполнению ещё не приступили.
-    2.  `IN_PROGRESS` — над задачей ведётся работа.
-    3.  `DONE` — задача выполнена.
+1. **Name**, briefly describing the essence of the task (for example, **"**Moving**"**).
+2. ** Description**, which reveals the details.
+3. **The unique identification number of the task** by which it can be found.
+4. **Status** showing her progress. We will highlight the following stages of the task's life:
 
-Иногда для выполнения какой-нибудь масштабной задачи её лучше разбить на **подзадачи** (англ. _subtask_). Большую задачу, которая делится на подзадачи, мы будем называть **эпиком** (англ. _epic_).
+1. `NEW` — the task has just been created, but it has not yet been started.
+2. `IN_PROGRESS` — the task is being worked on.
+3. `DONE' — the task is completed.
 
-Таким образом, в нашей системе задачи могут быть трёх типов: обычные задачи, эпики и подзадачи. Для них должны выполняться следующие условия:
+Sometimes, to perform some large-scale task, it is better to break it into ** subtasks ** (Eng. _subtask_). A large task, which is divided into subtasks, we will call ** epic ** (Eng. _epic_).
 
-*   Для каждой подзадачи известно, в рамках какого эпика она выполняется.
-*   Каждый эпик знает, какие подзадачи в него входят.
-*   Завершение всех подзадач эпика считается завершением эпика.
+Thus, there can be three types of tasks in our system: regular tasks, epics and subtasks. The following conditions must be met for them:
 
-### Идентификатор задачи
+* For each subtask, it is known within which epic it is performed.
+* Every epic knows what subtasks it includes.
+* The completion of all epic subtasks is considered the completion of the epic.
 
-У каждого типа задач есть идентификатор. Это целое число, уникальное для всех типов задач. По нему мы находим, обновляем, удаляем задачи. При создании задачи менеджер присваивает ей новый идентификатор.
+### Task ID
+
+Each task type has an identifier. This is an integer that is unique for all types of tasks. We use it to find, update, and delete tasks. When creating a task, the manager assigns a new identifier to it.
 
 
-Менеджер
+Manager
 --------
 
-Кроме классов для описания задач, вам нужно реализовать класс для объекта-менеджера. Он будет запускаться на старте программы и управлять всеми задачами. В нём должны быть реализованы следующие функции:
+In addition to classes for describing tasks, you need to implement a class for the manager object. It will be launched at the start of the program and manage all tasks. The following functions should be implemented in it:
 
-1.  Возможность хранить задачи всех типов. Для этого вам нужно выбрать подходящую коллекцию.
-2.  Методы для каждого из типа задач(Задача/Эпик/Подзадача):  
-    1.  Получение списка всех задач.
-    2.  Удаление всех задач.
-    3.  Получение по идентификатору.
-    4.  Создание. Сам объект должен передаваться в качестве параметра.
-    5.  Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.
-    6.  Удаление по идентификатору.
-3.  Дополнительные методы:  
-    1.  Получение списка всех подзадач определённого эпика.
-4.  Управление статусами осуществляется по следующему правилу:  
-    
-    1.  Менеджер сам не выбирает статус для задачи. Информация о нём приходит менеджеру вместе с информацией о самой задаче. По этим данным в одних случаях он будет сохранять статус, в других будет рассчитывать.
-    2.  Для эпиков:
-    
-    *   если у эпика нет подзадач или все они имеют статус `NEW`, то статус должен быть `NEW`.
-    *   если все подзадачи имеют статус `DONE`, то и эпик считается завершённым — со статусом `DONE`.
-    *   во всех остальных случаях статус должен быть `IN_PROGRESS`.
+1. The ability to store tasks of all types. To do this, you need to choose a suitable collection.
+2. Methods for each of the task types (Task/Epic/Subtask):
+1. Getting a list of all tasks.
+2. Delete all tasks.
+3. Getting by ID.
+4. Creation. The object itself must be passed as a parameter.
+5. Update. The new version of the object with the correct identifier is passed as a parameter.
+6. Deletion by ID.
+3. Additional methods:
+1. Getting a list of all subtasks of a certain epic.
+4. Statuses are managed according to the following rule:
+
+1. The manager does not choose the status for the task himself. Information about it comes to the manager along with information about the task itself. According to this data, in some cases it will retain the status, in others it will count.
+2. For epics:
+
+* if the epic has no subtasks or all of them have the status `NEW`, then the status should be `NEW'.
+* if all subtasks have the status `DONE`, then the epic is considered completed — with the status `DONE'.
+* in all other cases, the status should be `IN_PROGRESS'.
